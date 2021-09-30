@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\background.ps.fx" />
+    <None Remove="Resources\basic.ps.fx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\background.ps.fx" />
+    <Resource Include="Resources\basic.ps.fx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DependencyProperties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DependencyProperties.cs</LastGenOutput>
+    </None>
+    <None Update="Effects.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Effects.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DependencyProperties.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DependencyProperties.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Effects.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Effects.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

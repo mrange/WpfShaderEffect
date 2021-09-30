@@ -1,0 +1,73 @@
+﻿<#
+  var model = new []
+  {
+    DO( "MainWindow"
+      , ("double", "Time")
+      )
+  };
+#>
+
+namespace CsWpfShader
+{
+    using System.Windows;
+
+<# foreach(var (dnm, dps) in model) { #>
+    // ------------------------------------------------------------------------
+    partial class <#=dnm#>
+    {
+<# foreach(var (dpt, dpnm) in dps) { #>
+        // --------------------------------------------------------------------
+        #region <#=dpnm#> Property Details
+        public readonly static DependencyProperty <#=dpnm#>Property = DependencyProperty.Register(
+                @"<#=dpnm#>"
+            ,   typeof(<#=dpt#>)
+            ,   typeof(<#=dnm#>)
+            ,   new PropertyMetadata(
+                  default(<#=dpt#>)
+                , On<#=dpnm#>PropertyChangedStatic
+                , On<#=dpnm#>CoerceValueStatic
+                )
+            );
+
+        static void On<#=dpnm#>PropertyChangedStatic(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var t         = (<#=dnm#>)d;
+            var oldValue  = (<#=dpt#>)e.OldValue;
+            var newValue  = (<#=dpt#>)e.NewValue;
+            t.On<#=dpnm#>PropertyChanged(oldValue, newValue);
+        }
+
+        static object On<#=dpnm#>CoerceValueStatic(DependencyObject d, object baseValue)
+        {
+            var t           = (<#=dnm#>)d;
+            var bv          = (<#=dpt#>)baseValue;
+            var cv          = default(<#=dpt#>);
+            var isProcessed = false;
+            t.On<#=dpnm#>CoerceValue(bv, ref cv, ref isProcessed);
+            return isProcessed ? cv : baseValue;
+        }
+
+        #endregion
+
+        partial void On<#=dpnm#>PropertyChanged(<#=dpt#> oldValue, <#=dpt#> newValue);
+        partial void On<#=dpnm#>CoerceValue(<#=dpt#> baseValue, ref <#=dpt#> coercedValue, ref bool isProcessed);
+        public <#=dpt#> <#=dpnm#>
+        {
+           get => (<#=dpt#>)GetValue(<#=dpnm#>Property);
+           set => SetValue(<#=dpnm#>Property, value);
+        }
+        // --------------------------------------------------------------------
+
+<# } #>
+    }
+    // ------------------------------------------------------------------------
+
+<# } #>
+}
+
+<#+
+static (string, (string, string)[]) DO(string nm, params (string, string)[] ps)
+{
+  return (nm??"<NULL>", ps);
+}
+#>

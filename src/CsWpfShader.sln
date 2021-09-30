@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31717.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsWpfShader", "CsWpfShader\CsWpfShader.csproj", "{A6F0B79E-267C-4F07-8FFF-F06CE558B858}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{069C3CB1-D913-427F-AB8B-17672457EF4E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsDxEffectCompiler", "CsDxEffectCompiler\CsDxEffectCompiler.csproj", "{36B2AF16-EDC6-46F3-A1A2-DFA0A294FDAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsCompileEffect", "CsCompileEffect\CsCompileEffect.csproj", "{02C4C075-7209-447D-9B1E-9F87BE8BB980}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6F0B79E-267C-4F07-8FFF-F06CE558B858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F0B79E-267C-4F07-8FFF-F06CE558B858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F0B79E-267C-4F07-8FFF-F06CE558B858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F0B79E-267C-4F07-8FFF-F06CE558B858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B2AF16-EDC6-46F3-A1A2-DFA0A294FDAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B2AF16-EDC6-46F3-A1A2-DFA0A294FDAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B2AF16-EDC6-46F3-A1A2-DFA0A294FDAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B2AF16-EDC6-46F3-A1A2-DFA0A294FDAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C4C075-7209-447D-9B1E-9F87BE8BB980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C4C075-7209-447D-9B1E-9F87BE8BB980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C4C075-7209-447D-9B1E-9F87BE8BB980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C4C075-7209-447D-9B1E-9F87BE8BB980}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69F00B11-A159-491C-8397-9AC7D64D7785}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,125 @@
+﻿<#
+  var model = new []
+  {
+      Effect( "Basic"
+            , Constant("Time"       , 1, 0)
+          )
+    , Effect( "Background"
+            , Constant("Time"       , 1, 0)
+            , Constant("Resolution" , 2, 1)
+          )
+  };
+#>
+namespace CsWpfShader
+{
+  using System.Windows;
+  using System.Windows.Media.Effects;
+
+<# foreach (var (cnm, props) in model) { #>
+    // ------------------------------------------------------------------------
+    public partial class <#=cnm#>ShaderEffect : ShaderEffect
+    {
+        static readonly PixelShader _pixelShader = Utility.CreatePixelShader<<#=cnm#>ShaderEffect>();
+
+        public <#=cnm#>ShaderEffect()
+        {
+            PixelShader = _pixelShader;
+<# foreach (var (pnm, _, _) in props) { #>
+            UpdateShaderValue(<#=pnm#>Property);
+<# }#>
+        }
+
+<# foreach (var (pnm, pidx, pdim) in props) { #>
+<# if (pdim < 1) { #>
+// TODO: Sampler: <#=pnm#>
+<# } else { #>
+<#
+  var ptype = pdim switch
+  {
+      1 => "double"
+    , 2 => "Point"
+    , _ => $"UNSUPPORTED_DIM_{pdim}"
+  };
+#>
+        public readonly static DependencyProperty <#=pnm#>Property = DependencyProperty.Register(
+                @"<#=pnm#>"
+            ,   typeof(<#=ptype#>)
+            ,   typeof(<#=cnm#>ShaderEffect)
+            ,   new PropertyMetadata(
+                  default(<#=ptype#>)
+                , PixelShaderConstantCallback(<#=pidx#>)
+                , On<#=pnm#>CoerceValueStatic
+                )
+            );
+
+        partial void On<#=pnm#>CoerceValue(
+                <#=ptype#>      baseValue
+            ,   ref <#=ptype#>  newValue
+            ,   ref bool        isProcessed
+            );
+
+        static object On<#=pnm#>CoerceValueStatic(
+                DependencyObject  instance
+            ,   object            baseValue
+            )
+        {
+           var inst = (<#=cnm#>ShaderEffect)instance;
+           if(inst != null)
+           {
+              var bv          = (<#=ptype#>)baseValue;
+              var newValue    = default(<#=ptype#>);
+              var isProcessed = false;
+              inst.On<#=pnm#>CoerceValue(
+                 bv,
+                 ref newValue,
+                 ref isProcessed);
+              if (isProcessed)
+              {
+                 return newValue;
+              }
+              else
+              {
+                 return baseValue;
+              }
+           }
+           else
+           {
+              return baseValue;
+           }
+        }
+
+      public <#=ptype#> <#=pnm#>
+      {
+         get
+         {
+            return (<#=ptype#>)GetValue(<#=pnm#>Property);
+         }
+         set
+         {
+            SetValue(<#=pnm#>Property, value);
+         }
+      }
+<# } #>
+<# } #>
+
+    }
+    // ------------------------------------------------------------------------
+
+<# } #>
+}
+
+<#+
+
+const string Null = "<NULL>";
+
+static (string, (string, int, int)[]) Effect(string nm, params (string, int, int)[] inputs)
+{
+  return (nm??Null, inputs??new (string, int, int)[0]);
+}
+
+static (string, int, int) Constant(string nm, int dim, int idx)
+{
+  return (nm??Null, idx, dim);
+}
+
+#>
